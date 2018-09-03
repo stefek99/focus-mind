@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>hide me</title>
+    <script src="lib/jquery.min.js"></script> 
+    <script src="lib/angular.min.js"></script>    
+    <script src="lib/angular-route.min.js"></script>    
+
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.min.js"></script>
+-->
+
+    <style>
+
+    	#overlay {
+    		position: fixed;
+    		top: 0;
+    		bottom: 0;
+    		left: 0;
+    		right: 0;
+    		background: white;
+    	}
+    /*
+    	body {
+    		display: none;
+    	}
+    */
+    </style>
+    <script type="text/javascript">
+    	$(function() {
+
+    		$("form").on("submit", function() {
+    			var what = $("#accomplish").val();
+    			var time = $("#howmuchtime").val();
+
+
+    			$("#overlay").hide();
+
+
+    			return false;
+
+    		})
+
+    	});
+
+    </script>
+  </head>
+  <body ng-app="app">
+
+
+  	<div ng-view></div>
+
+  	<div id='overlay'>
+  		<h3>I am the overlay</h3>
+  		<p>You are on a website, known to be fucking distracting.</p>
+
+  		<form>
+	  		<label for="accomplish">What do you want to accomplish</label>
+	  		<input id="accomplish" placeholder="what...">
+
+	  		<br>
+
+
+	  		<label for="howmuchtime">How much time is a sensible estimate (minutes)</label>
+	  		<input type="number" id="howmuchtime" placeholder="minutes..." value=1>
+
+	 
+	 		<input type="submit" value="I'm reaady">
+	 	</form>
+
+
+  	</div>
+
+  	<div id="second-phase">
+  		<p>You are here to <span id="goal"></span></p>
+  		<p>Time left: <span id="minutes"></span> minutes <span id="seconds"></span> seconds</p>
+  	</div>
+
+
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+  	<h1>content</h1>
+
+  	<script src="app.js"></script>
+
+  	<script type="text/ng-template" id="home.html">
+      <h1>Home</h1>
+    </script>
+
+    <script type="text/ng-template" id="login.html">
+      <h1>Login</h1>
+      {{ message }}
+    </script>
+  
+  </body>
+</html>
