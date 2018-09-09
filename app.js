@@ -18,8 +18,8 @@ app.config(function ($routeProvider) {
 });
 
 app.controller("HomeCtrl", function($scope, countdown) {
-  $scope.minutes = 1;
-  $scope.seconds = 30;
+  $scope.minutes = 0;
+  $scope.seconds = 3;
   $scope.accomplish = "required";
 
   $scope.submit = function() {
@@ -33,13 +33,27 @@ app.controller("CountdownCtrl", function($scope, $location, countdown) {
   $scope.Math = window.Math;
   $scope.accomplish = countdown.accomplish;
   $scope.seconds = countdown.seconds;
+  $scope.state = 'init';
 
   if (!$scope.accomplish) { $location.path("/"); }  // checking if we are initialized
 
   $scope.$on("second", function(event, data) {
-    $scope.seconds = data.seconds;
+    
+
+    if (data.seconds < 0) {
+      $scope.state = 'toolate';
+      $scope.seconds = Math.abs(data.seconds);
+    } else {
+      $scope.seconds = data.seconds;
+    }
+
     $scope.$apply();
   })
+
+  $scope.done = function() {
+    $scope.state = 'done';
+    countdown.stop();
+  }
   
 });
 
@@ -50,24 +64,21 @@ app.controller("SettingsCtrl", function($scope) {
 app.service("countdown", function($rootScope, $location) {
   var countdown = {};
 
-
-
   countdown.start = function(accomplish, seconds) {
     countdown.accomplish = accomplish;
     countdown.seconds = seconds;
     countdown.intervalId = setInterval(function() {
       countdown.seconds--;
-      console.log(countdown.seconds);
 
       $rootScope.$broadcast("second", {seconds: countdown.seconds})
-
-      if (countdown.seconds === 0) {
-        clearInterval(countdown.intervalId);
-      }
       
     }, 1000);
 
     $location.path("countdown");
+  }
+
+  countdown.stop = function() {
+    clearInterval(countdown.intervalId);
   }
 
   return countdown;
