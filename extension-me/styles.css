@@ -1,5 +1,21 @@
 body {
-  display: none;
+  /* display: none; */
+  margin-top: 100px;
+}
+
+#focus-mind {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  border: 0;
+  background: grey;
+}
+
+#focus-mind p {
+  background: red;
 }
 
 .ng-hide {

@@ -29,9 +29,28 @@ function fireContentLoadedEvent () {
 
 // main function (not using sweat words in code)
 function doThis() {
+
+  let focusMindarkup = "<div id='focus-mind'></iframe>"
+  $(focusMindarkup).prependTo("body");
+
+  var el = document.getElementById('focus-mind');
+  var shadow = el.createShadowRoot();
+        
+  // var shadowHTML = '';
+  // shadowHTML += '<style>:host { all: initial; } </style>';
+  // shadowHTML += '<p>These paragraphs are in a shadow root.</p>';
+  // shadowHTML += '<p>They are unaffected by the paragraph styles on the page.</p>';
+  // shadowHTML += '<p>But they do inherit inheritable properties, like font-family.</p>';
+  // shadowHTML += '<p>And styles defined inside the shadow root - (an underline in this case) - don\'t affect the rest of the page.</p>';
+  
+  // shadow.innerHTML = shadowHTML;
+
+
   let markup; // collapsible body, more screen real estate
   {     
-    markup = `<div id="focus-mind"><div ng-view></div>
+    markup = `
+    <div id="focus-mind-inside-shadow-dom" ng-view></div>
+
     <script type="text/ng-template" id="partials/home.html">
       <div class='overlay'>
         <h3>I am the overlay</h3>
@@ -98,7 +117,9 @@ function doThis() {
     </script>`
   }
 
-  $(markup).prependTo("body");
+  shadow.innerHTML = markup;
+
+
 
   var app = angular.module("app", ["ngRoute"]);
 
@@ -192,16 +213,20 @@ function doThis() {
   })
 
   angular.element(function() {
-    angular.bootstrap(document, ['app']);
-    writeToFrame();
+    angular.bootstrap(document.getElementById('focus-mind-inside-shadow-dom'), ['app']);
+    
+
+    console.log("BOOTSTRAP DONE");
   });
 
-  function writeToFrame() {
-    var doc = document.getElementById('testing').contentWindow.document;
-    doc.open();
-    doc.write('<html><head><title></title><style>body{ background: blue }</style></head><body>Hello world.</body></html>');
-    doc.close();
-  }
 
+  // function writeToFrame() {
+  //   var doc = document.getElementById('focus-mind-iframe').contentWindow.document;
+  //   doc.open();
+  //   doc.write('<html><head><title></title><style>body{ background: blue }</style></head><body>Hello world.</body></html>');
+  //   doc.close();
+  // }
+
+  // writeToFrame();
   
 };
